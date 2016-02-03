@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SoftwareRenderer
+﻿namespace SoftwareRenderer
 {
-    static class Program
+    internal static class Program
     {
-        static void Main(string[] args) {
-            var app = new AppDelegate();
-            app.Run();
+        private static void Main(string[] args) {
+            using (var app = new AppDelegate()) {
+                app.Run();
+            }
         }
     }
 }

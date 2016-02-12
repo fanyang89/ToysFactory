@@ -1,14 +1,15 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace SoftwareRenderer
 {
-    public class GraphicsBuffer
+    public class GraphicsBuffer : IDisposable
     {
-        public GraphicsBuffer(int width, int height) {
+        public GraphicsBuffer(int width, int height, Camera camera) {
             Current = new Bitmap(width, height);
-            CurrentGraphicsDevice = new GraphicsDevice(Current);
+            CurrentGraphicsDevice = new GraphicsDevice(Current, camera);
             Background = new Bitmap(width, height);
-            BackgroundGraphicsDevice = new GraphicsDevice(Background);
+            BackgroundGraphicsDevice = new GraphicsDevice(Background, camera);
         }
 
         public Bitmap Background { get; private set; }
@@ -20,6 +21,13 @@ namespace SoftwareRenderer
             var t = Current;
             Current = Background;
             Background = t;
+        }
+
+        public void Dispose() {
+            CurrentGraphicsDevice.Dispose();
+            Current.Dispose();
+            BackgroundGraphicsDevice.Dispose();
+            Background.Dispose();
         }
     }
 }

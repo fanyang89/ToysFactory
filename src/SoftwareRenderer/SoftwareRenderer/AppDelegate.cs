@@ -25,9 +25,8 @@ namespace SoftwareRenderer
         }
 
         public void Dispose() {
-            buffer.BackgroundGraphicsDevice.Dispose();
-            buffer.CurrentGraphicsDevice.Dispose();
             formGraphics.Dispose();
+            buffer.Dispose();
         }
 
         public void Run() {
@@ -63,9 +62,9 @@ namespace SoftwareRenderer
                 StartPosition = FormStartPosition.CenterScreen
             };
             formGraphics = form.CreateGraphics();
-            buffer = new GraphicsBuffer(Width, Height);
-            meshes = Mesh.FromBabylonModel("Contents/monkey.babylon");
             camera = new Camera { Position = new Vector(0, 0, 10), Target = Vector.Zero };
+            buffer = new GraphicsBuffer(Width, Height, camera);
+            meshes = Mesh.FromBabylonModel("Contents/monkey.babylon");
         }
 
         private void Present() {
@@ -75,7 +74,7 @@ namespace SoftwareRenderer
         private void Render(TimeSpan dt) {
             var device = buffer.BackgroundGraphicsDevice;
             device.Clear(Color.White);
-            device.DrawMeshes(meshes, camera, Color.CadetBlue);
+            device.DrawMeshes(meshes, Color.CadetBlue);
             device.DrawString($"FPS: {1000.0 / dt.Milliseconds:F2}", defaultFont, Brushes.Black, 0, 0);
         }
 

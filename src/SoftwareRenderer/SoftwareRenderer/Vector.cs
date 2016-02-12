@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace SoftwareRenderer
 {
     public struct Vector
@@ -48,6 +50,14 @@ namespace SoftwareRenderer
 
         public static Vector Zero => new Vector(0);
         private float[] Values { get; }
+
+        public static implicit operator Point(Vector v) {
+            return new Point((int)v.X, (int)v.Y);
+        }
+
+        public static implicit operator PointF(Vector v) {
+            return new PointF(v.X, v.Y);
+        }
 
         public static Vector operator -(Vector a, Vector b) {
             return new Vector(0) {
@@ -100,7 +110,6 @@ namespace SoftwareRenderer
         public Vector Interpolate(Vector v, float factor) {
             return this + (v - this) * factor;
         }
-
         public Vector Normalize() {
             var length = Length;
             var factor = 0f;

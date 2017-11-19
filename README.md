@@ -4,7 +4,7 @@
 
 - Software Renderer
 
-- web-paint(like web-paint)
+- web-paint(like mspaint)
 
 ## License
 
